@@ -1,0 +1,18 @@
+services:
+  app:
+    build: .
+    env_file:
+      - .env
+    environment:
+      TARANTOOL_ADDRESS: tarantool:3301
+      TARANTOOL_USER: guest
+      TARANTOOL_PASSWORD:
+    depends_on:
+      tarantool:
+        condition: service_started
+    restart: unless-stopped
+
+  tarantool:
+    image: tarantool/tarantool
+    ports:
+      - "127.0.0.1:3301:3301"
